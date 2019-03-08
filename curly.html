@@ -236,7 +236,7 @@
     {block:IfBannerFont}<link rel="stylesheet" href="https://fonts.googleapis.com/css?family={text:Banner Font}:{select:Banner Text Font Weight}, 400,400italic,700,700italic">{/block:IfBannerFont}
     {block:IfLogoFont}<link rel="stylesheet" href="https://fonts.googleapis.com/css?family={text:Logo Font}:{select:Logo Font Weight}, 400,400italic,700,700italic">{/block:IfLogoFont}
     
-    <link href="https://static.tumblr.com/jzzkxgh/lw4plk174/core.css" rel="stylesheet">
+    <link href="https://static.tumblr.com/jzzkxgh/Adhpo0u28/core.css" rel="stylesheet">
     
     <style type="text/css">
         
@@ -1119,7 +1119,7 @@
                     </div>
                 {/block:IfBannerText}
                 
-                {block:IfBannerYoutubeVideoID}
+               {block:IfBannerYoutubeVideoID}
                     <div class="banner-video-options cl">
                          <div class="banner-video-option yt-mute-button mute-button {select:Banner Video Volume}">
                             <i id="vol-high" class="im im-volume"></i>
@@ -1165,7 +1165,21 @@
                                   playerVars: { 'showinfo': 0, 'autoplay': {select:Banner Video Autoplay}, 'controls': 0, 'showinfo':0, 'autohide':1,'wmode':'opaque', 'rel':0, 'playlist':'{text:Banner Youtube Video ID}', 'loop':1 },
                                   videoId: "{text:Banner Youtube Video ID}",
                                   events: {
-                                    'onReady': onPlayerReady
+                                    'onReady': onPlayerReady,
+                                    'onStateChange': function (event) {
+                                      if (event.data == YT.PlayerState.PLAYING) {  
+                                        var playadobea = new TimelineMax()
+                                          .add(TweenMax.to("#vid-play", 0.4, {opacity:0, ease: Power2.easeOut}),0)
+                                          .add(TweenMax.to("#vid-pause", 0.4, {opacity:1, ease: Power2.easeOut}),0.4);
+                                        TweenMax.to(".banner-video-title", 0.4, {opacity:0, ease:Power2.easeOut});
+                                      }
+                                      else if (event.data == YT.PlayerState.PAUSED) { 
+                                        var pauseadobea = new TimelineMax()
+                                          .add(TweenMax.to("#vid-pause", 0.4, {opacity:0, ease: Power2.easeOut}),0)
+                                          .add(TweenMax.to("#vid-play", 0.4, {opacity:1, ease: Power2.easeOut}),0.4);
+                                        TweenMax.to(".banner-video-title", 0.4, {opacity:1, ease:Power2.easeOut});
+                                      }
+                                    }
                                   }
                                 });
                               }
@@ -1193,7 +1207,21 @@
                                 player = new YT.Player('player', {
                                   playerVars: { 'showinfo': 0, 'autoplay': {select:Banner Video Autoplay}, 'controls': 0, 'showinfo':0, 'autohide':1,'wmode':'opaque', 'rel':0, listType:'playlist', list: '{text:Banner Youtube Playlist ID}', 'loop':1 },
                                   events: {
-                                    'onReady': onPlayerReady
+                                    'onReady': onPlayerReady,
+                                    'onStateChange': function (event) {
+                                      if (event.data == YT.PlayerState.PLAYING) {  
+                                        var playadobea = new TimelineMax()
+                                          .add(TweenMax.to("#vid-play", 0.4, {opacity:0, ease: Power2.easeOut}),0)
+                                          .add(TweenMax.to("#vid-pause", 0.4, {opacity:1, ease: Power2.easeOut}),0.4);
+                                        TweenMax.to(".banner-logo, .arr-down", 0.4, {opacity:0, ease:Power2.easeOut});
+                                      }
+                                      else if (event.data == YT.PlayerState.PAUSED) { 
+                                        var pauseadobea = new TimelineMax()
+                                          .add(TweenMax.to("#vid-pause", 0.4, {opacity:0, ease: Power2.easeOut}),0)
+                                          .add(TweenMax.to("#vid-play", 0.4, {opacity:1, ease: Power2.easeOut}),0.4);
+                                        TweenMax.to(".banner-logo, .arr-down", 0.4, {opacity:1, ease:Power2.easeOut});
+                                      }
+                                    }
                                   }
                                 });
                               }
@@ -1209,19 +1237,7 @@
               
                 {block:IfBannerVimeoVideoID}
                     <!-- Vimeo Player -->
-                    
-                    <div class="banner-video-options cl">
-                         <div class="banner-video-option vimeo-mute-button mute-button {select:Banner Video Volume}">
-                            <i id="vol-high" class="im im-volume"></i>
-                            <i id="vol-mute" class="im im-volume-off"></i>
-                        </div>
-                         <div class="banner-video-option vimeo-play-button play-button autoplay-{select:Banner Video Autoplay} ">
-                            <i id="vid-play" class="im im-play"></i>
-                            <i id="vid-pause" class="im im-pause"></i>
-                        </div>
-                    </div>
-                    
-                    <iframe id="banner-vimeo-video" src="https://player.vimeo.com/video/{text:Banner Vimeo Video ID}?background=1&loop=1" width="100%" height="100%" frameborder="0" webkitallowfullScreen mozallowfullscreen allowfullscreen></iframe>
+                    <iframe id="banner-vimeo-video" src="https://player.vimeo.com/video/{text:Banner Vimeo Video ID}?background=0&muted=1&loop=1" width="100%" height="100%" frameborder="0" webkitallowfullScreen mozallowfullscreen allowfullscreen></iframe>
                 {/block:IfBannerVimeoVideoID}
  
                 {block:ifbannerbackgroundimage}
@@ -2086,6 +2102,12 @@
                         'opacity': '1'
                     });
                 }
+            }
+            
+            if ( $('.post-video').length > 0 ) {
+                $('.post').each(function(){
+                    TweenMax.to(".post", 0.4, {autoAlpha:1, ease:Power2.easeOut});
+                });
             }
 
         })(window.jQuery);
