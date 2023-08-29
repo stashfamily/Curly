@@ -1240,10 +1240,14 @@
             z-index:4;
         }
         
-        .overlay-bg {
-            pointer-events:none;
-            z-index:0;
-        }
+		.stash-photo-post .overlay-bg {
+			pointer-events:none;
+			z-index:0;
+		}
+
+		.stash-overlay.text .caption {
+			display:none;
+		}
 
        .stash-overlay .stash-post-meta .caption figure {
            display:none;
@@ -2170,7 +2174,7 @@
     </script>
 
     <script type="text/javascript" src="https://static.tumblr.com/jzzkxgh/SKBqib0qz/curly.js"></script>
-    {block:IfModalPost}<script src="https://static.tumblr.com/jzzkxgh/wR1s05oyv/modal.js"></script>{/block:IfModalPost}
+    {block:IfModalPost}<script src="https://static.tumblr.com/jzzkxgh/UPfs05wra/modal.js"></script>{/block:IfModalPost}
 
     {block:IfTypeKitID}
         <!-- Typekit -->
