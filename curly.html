@@ -1264,6 +1264,10 @@
                 min-height:350px;
                 max-height:50vh !important;
             }
+            
+            .post-page article.post-single .fluid-width-video-wrapper {
+                min-width:720px;
+            }
         }
 
         
@@ -1788,7 +1792,7 @@
                     <div class="ants-sizer-{select:Posts Columns}"></div>
                     <div class="ants-gutter-{select:Posts Columns}"></div>
 
-                    {block:Posts}
+                    {block:Posts inlineMediaWidth="1280"}
                         
                         {block:Photo}
                         <article id="{PostID}" class="{block:IndexPage} ants-item-{select:Posts Columns} parsed post modal post-photo pp {block:Tags}{Tag} {/block:Tags}{/block:IndexPage}{block:PermalinkPage}{block:Date} post-single{/block:Date}{/block:PermalinkPage}" data-id="{PostID}" data-notes="{PostNotesURL}" data-pt="photo">
@@ -2409,26 +2413,6 @@
         });
         {/block:IfDribbbleWidgetAccessToken}
     </script>
-    
-    {block:IfInstagramUsername}
-        <script>
-            (function($) {
-                $.instagramFeed({
-                    'username': '{text:Instagram Username}',
-                    'container': "#instagram-feed",
-                    'display_profile': {block:IfInstagramFeedShowAvatar}true{/block:IfInstagramFeedShowAvatar}{block:IfNotInstagramFeedShowAvatar}false{/block:IfNotInstagramFeedShowAvatar},
-                    'display_biography': {block:IfInstagramFeedShowDescription}true{/block:IfInstagramFeedShowDescription}{block:IfNotInstagramFeedShowDescription}false{/block:IfNotInstagramFeedShowDescription},
-                    'display_gallery': true,
-                    'get_raw_json': false,
-                    'callback': null,
-                    'styling': true,
-                    'items': {text:Instagram Feed Photo Count},
-                    'items_per_row': 2,
-                    'margin': 1
-                });
-            })(jQuery); 
-        </script>
-    {/block:IfInstagramUsername}
 
 </body>
 </html>
