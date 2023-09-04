@@ -2170,7 +2170,7 @@
     
             <!-- Header Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-    <script type="text/javascript" src="https://static.tumblr.com/jzzkxgh/oIKs05oyi/plugins.js">
+    <script type="text/javascript" src="https://static.tumblr.com/evx2wil/SHKs0avm2/plugins.js">
     </script>
 
     <script type="text/javascript" src="https://static.tumblr.com/jzzkxgh/SKBqib0qz/curly.js"></script>
@@ -2320,10 +2320,15 @@
                 }
             }
             
+
             if ( $('.post-video').length > 0 ) {
                 $('.post').each(function(){
                     TweenMax.to(".post", 0.4, {autoAlpha:1, ease:Power2.easeOut});
                 });
+
+                setTimeout(function(){
+                    $('#stash-ants').isotope(true).isotope('layout');
+                }, 1200);
             }
 
         })(window.jQuery);
