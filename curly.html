@@ -641,7 +641,7 @@
         {/block:IfNotShowPostDate}
 
         {block:IfNotShowPostMeta}
-            .note-count, #stash-ants .meta, #stash-ants .post-meta .share, .meta, .share {
+            .note-count, #stash-ants .meta, #stash-ants .post-meta .share, .meta, .share, body.index-page .post-meta {
                 display:none;
             }
         {/block:IfNotShowPostMeta}
@@ -1110,7 +1110,9 @@
         
         {block:ifshowphotooverlay}
             body.index-page #stash-ants article.post-photo p, 
-            body.index-page #stash-ants article.post-photoset p
+            body.index-page #stash-ants article.post-photoset p,
+            body.index-page #stash-ants article.post-photo h2, 
+            body.index-page #stash-ants article.post-photoset h2
             {
                 display:none;
             }
@@ -1119,7 +1121,11 @@
             {
                 display:block;
             }
-        {/block:ifshowphotooverlay}            
+        {/block:ifshowphotooverlay}   
+    
+        body.index-page #stash-ants article.post-photo .content figure img, body.index-page #stash-ants article.post-photoset .content figure img {
+            display:none;
+        }
 
         /** New **/
         
