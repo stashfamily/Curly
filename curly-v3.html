@@ -1280,6 +1280,25 @@
             }
         }
 
+        /** Video Poster **/
+        
+        .video-poster {
+            width:100%;
+            height:100%;
+            z-index:-1;
+            position:absolute;
+            left:0;
+            top:0;
+        }
+        
+        @media (min-width: 740px) {
+            .video-poster {
+                display:none;
+            }
+        }
+        .stash-overlay.video .caption video, .stash-overlay.video .caption figure, .stash-overlay .video-poster {
+            display:none;
+        }
         
     </style>
 
@@ -2180,7 +2199,7 @@
     
             <!-- Header Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-    <script type="text/javascript" src="https://static.tumblr.com/evx2wil/SHKs0avm2/plugins.js">
+    <script type="text/javascript" src="https://static.tumblr.com/jzzkxgh/HXdsi5e22/plugins.js">
     </script>
 
     <script type="text/javascript" src="https://static.tumblr.com/jzzkxgh/SKBqib0qz/curly.js"></script>
@@ -2194,6 +2213,9 @@
     
     <script type="text/javascript">
         (function($) {
+            
+    	    stashFuel();
+            
             var windowwidth = $(document).width();
             $(document).ready(function(){
 
@@ -2228,10 +2250,8 @@
             {block:IndexPage}
                 $antsIsoCont = $('#stash-ants');
                 antsIsotope = $antsIsoCont.imagesLoaded(function(){
-            	    stashFuel();
                     $("article").fitVids();
                     $('.stash-photoset.ips').stashIPS();
-                    $('#stash-ants').isotope(true).isotope('layout');
                     TweenMax.fromTo("#posts", 1, {opacity:0, y:100, ease:Power2.easeOut, force3D: true},{opacity:1, y:0, ease:Power2.easeOut, force3D: true});   
 
                     $antsIsoCont.isotope({
@@ -2255,6 +2275,8 @@
                         });
                     }
                 });
+                
+                $('#stash-ants').isotope(true).isotope('layout');
             {/block:IndexPage}
             
             var controller = new ScrollMagic.Controller();
@@ -2276,9 +2298,13 @@
                     }
                 },
               },function( newElements ) {
+                stashFuel();
                 var $newElems = $(newElements).css({ opacity: 0, visibility:'hidden'});
     
                 $newElems.imagesLoaded(function(){
+                    
+                    $('.stash-photoset.ips').stashIPS();
+                    $("article").fitVids();
                     
                     $($newElems).each(function(){
                         var currentPost = this;
@@ -2287,11 +2313,8 @@
                             scene.setTween(TweenMax.fromTo(currentPost, 0.7, { autoAlpha:0, y:100, ease: Power2.easeInOut},{autoAlpha:1, y:0, ease: Power2.easeInOut, force3D: true}, 0));
                     });
                         
-                    stashFuel();
                     $container.isotope( 'appended', $newElems, true );  
                         
-                    $('.stash-photoset.ips').stashIPS();
-                    $("article").fitVids();
                     $('#stash-ants').isotope(true).isotope('layout');
                 });
                 
