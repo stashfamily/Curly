@@ -2272,6 +2272,19 @@
                     }
                 });
                 
+                if ( $('.post-video').length > 0 ) {
+                    $('.post').each(function(){
+                        TweenMax.to(".post", 0.4, {autoAlpha:1, ease:Power2.easeOut});
+                    });
+                    
+                    $("article").fitVids();
+                    
+                    $('video').on('loadeddata',function (){
+                        $("article").fitVids();
+                        $('#stash-ants').isotope(true).isotope('layout');
+                    });
+                }
+                
                 $('#stash-ants').isotope(true).isotope('layout');
             {/block:IndexPage}
             
@@ -2304,14 +2317,22 @@
                     
                     $($newElems).each(function(){
                         var currentPost = this;
-                        var scene = new ScrollMagic.Scene({triggerElement: currentPost, triggerHook: "onEnter", offset:-150, reverse: true});
+                        var scene = new ScrollMagic.Scene({offset:0, reverse: true});
                             scene.addTo(controller);
-                            scene.setTween(TweenMax.fromTo(currentPost, 0.7, { autoAlpha:0, y:100, ease: Power2.easeInOut},{autoAlpha:1, y:0, ease: Power2.easeInOut, force3D: true}, 0));
+                            scene.setTween(TweenMax.fromTo(currentPost, 0.7, { autoAlpha:0, y:30, ease: Power2.easeInOut},{autoAlpha:1, y:0, ease: Power2.easeInOut, force3D: true}, 0));
                     });
                         
                     $container.isotope( 'appended', $newElems, true );  
                         
                     $('#stash-ants').isotope(true).isotope('layout');
+                    
+                    if ( $('.post-video').length > 0 ) {
+                        $('video').on('loadeddata',function (){
+                            $('#stash-ants').isotope(true).isotope('layout');
+                            $(this).attr('playsinline', '');
+                        });
+                    }
+     
                 });
                 
                 $( "li.post-like" ).each(function( index ) {
