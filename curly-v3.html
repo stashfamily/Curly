@@ -163,15 +163,6 @@
         <meta name="text:Custom Link 10 URL" content=""/>
         <meta name="text:Custom Link 10 Name" content=""/>
         
-        <!-- Social Widgets -->
-        <meta name="text:Flickr Widget Title" content="Flickr">
-        <meta name="text:Flickr User ID" content="">
-        <meta name="text:Flickr Widget Feed Count" content="4">
-        <meta name="text:Dribbble Widget Title" content="Dribbble">
-        <meta name="text:Dribbble Widget Access Token" content="">
-        <meta name="text:Dribbble Widget Username" content="">
-        <meta name="text:Dribbble Widget Feed Count" content="6">
-        
         <meta name="text:Sidebar Text Widget Title" content="">
         <meta name="text:Sidebar Text Widget" content="">
         <meta name="text:Sidebar Image Ad Link" content="#">
@@ -1747,18 +1738,7 @@
                     <p>{text:Sidebar Text Widget}</p>
                 </div>
             {/block:IfSidebarTextWidget}
-            
-            {block:IfFlickrUserID}
-                <div class="flickr widget cl"> <h3>{text:Flickr Widget Title}</h3> <ul class="flickr-feed social-widget"></ul> </div>
-            {/block:IfFlickrUserID}
     
-            {block:IfDribbbleWidgetAccessToken}
-            <div class="dribbble widget cl"> 
-                <h3>{text:Dribbble Widget Title}</h3> 
-                <ul class="dribbble-feed social-widget"></ul> 
-            </div>
-            {/block:IfDribbbleWidgetAccessToken}
-            
             
             {block:ifsidebarimageadimage}
                 <div class="image-ad widget">
@@ -2438,40 +2418,7 @@
         s.parentNode.insertBefore(g,s)}(document,'script'));
     </script>
     {/block:IfGoogleAnalyticsID}
-    
-    <script>
-        {block:IfFlickrUserID}            
-            <!-- Flickr -->
-            var link_str = "link";
-            
-            $('.flickr-feed').jflickrfeed({
-            limit: {text:Flickr Widget Feed Count},
-            qstrings: {
-            id: '{text:Flickr User ID}'
-            },
-            itemTemplate: 
-            '<li>' +
-            '<a href="{{' + link_str + '}}"><img src="{{image_m}}" alt="{{title}}" /></a>' +
-            '</li>'
-            });
-        {/block:IfFlickrUserID}  
-        
-        {block:IfDribbbleWidgetAccessToken}
-        $.jribbble.setToken('{text:Dribbble Widget Access Token}');
-        $.jribbble.users('{text:Dribbble Widget Username}').shots({per_page: 36}).then(function(shots) {
-          var html = [];
-          
-          shots.forEach(function(shot) {
-            html.push('<li class="shots--shot">');
-            html.push('<a href="' + shot.html_url + '" target="_blank">');
-            html.push('<img src="' + shot.images.normal + '">');
-            html.push('</a></li>');
-          });
-          
-          $('.dribbble-feed').html(html.join(''));
-        });
-        {/block:IfDribbbleWidgetAccessToken}
-    </script>
+
 
 </body>
 </html>
