@@ -163,6 +163,15 @@
         <meta name="text:Custom Link 10 URL" content=""/>
         <meta name="text:Custom Link 10 Name" content=""/>
         
+        <!-- Social Widgets -->
+        <meta name="text:Flickr Widget Title" content="Flickr">
+        <meta name="text:Flickr User ID" content="">
+        <meta name="text:Flickr Widget Feed Count" content="4">
+        <meta name="text:Dribbble Widget Title" content="Dribbble">
+        <meta name="text:Dribbble Widget Access Token" content="">
+        <meta name="text:Dribbble Widget Username" content="">
+        <meta name="text:Dribbble Widget Feed Count" content="6">
+        
         <meta name="text:Sidebar Text Widget Title" content="">
         <meta name="text:Sidebar Text Widget" content="">
         <meta name="text:Sidebar Image Ad Link" content="#">
@@ -1202,6 +1211,10 @@
                 top:7.5px;
                 left:15px;
             }
+            
+            .modal-open .sidebar-toggle {
+                display: none;
+            }
         }
         
         
@@ -1285,6 +1298,12 @@
         }
         .stash-overlay.video .caption video, .stash-overlay.video .caption figure, .stash-overlay .video-poster {
             display:none;
+        }
+
+        body.index-page article.post-video .content figure,
+        body.index-page article.post-video .content video,
+        body.index-page article.Youtube .content .tmblr-embed {
+            display:none !important;
         }
         
     </style>
@@ -1738,7 +1757,18 @@
                     <p>{text:Sidebar Text Widget}</p>
                 </div>
             {/block:IfSidebarTextWidget}
+            
+            {block:IfFlickrUserID}
+                <div class="flickr widget cl"> <h3>{text:Flickr Widget Title}</h3> <ul class="flickr-feed social-widget"></ul> </div>
+            {/block:IfFlickrUserID}
     
+            {block:IfDribbbleWidgetAccessToken}
+            <div class="dribbble widget cl"> 
+                <h3>{text:Dribbble Widget Title}</h3> 
+                <ul class="dribbble-feed social-widget"></ul> 
+            </div>
+            {/block:IfDribbbleWidgetAccessToken}
+            
             
             {block:ifsidebarimageadimage}
                 <div class="image-ad widget">
@@ -2252,19 +2282,6 @@
                     }
                 });
                 
-                if ( $('.post-video').length > 0 ) {
-                    $('.post').each(function(){
-                        TweenMax.to(".post", 0.4, {autoAlpha:1, ease:Power2.easeOut});
-                    });
-                    
-                    $("article").fitVids();
-                    
-                    $('video').on('loadeddata',function (){
-                        $("article").fitVids();
-                        $('#stash-ants').isotope(true).isotope('layout');
-                    });
-                }
-                
                 $('#stash-ants').isotope(true).isotope('layout');
             {/block:IndexPage}
             
@@ -2297,22 +2314,14 @@
                     
                     $($newElems).each(function(){
                         var currentPost = this;
-                        var scene = new ScrollMagic.Scene({offset:0, reverse: true});
+                        var scene = new ScrollMagic.Scene({triggerElement: currentPost, triggerHook: "onEnter", offset:-150, reverse: true});
                             scene.addTo(controller);
-                            scene.setTween(TweenMax.fromTo(currentPost, 0.7, { autoAlpha:0, y:30, ease: Power2.easeInOut},{autoAlpha:1, y:0, ease: Power2.easeInOut, force3D: true}, 0));
+                            scene.setTween(TweenMax.fromTo(currentPost, 0.7, { autoAlpha:0, y:100, ease: Power2.easeInOut},{autoAlpha:1, y:0, ease: Power2.easeInOut, force3D: true}, 0));
                     });
                         
                     $container.isotope( 'appended', $newElems, true );  
                         
                     $('#stash-ants').isotope(true).isotope('layout');
-                    
-                    if ( $('.post-video').length > 0 ) {
-                        $('video').on('loadeddata',function (){
-                            $('#stash-ants').isotope(true).isotope('layout');
-                            $(this).attr('playsinline', '');
-                        });
-                    }
-     
                 });
                 
                 $( "li.post-like" ).each(function( index ) {
@@ -2418,7 +2427,40 @@
         s.parentNode.insertBefore(g,s)}(document,'script'));
     </script>
     {/block:IfGoogleAnalyticsID}
-
+    
+    <script>
+        {block:IfFlickrUserID}            
+            <!-- Flickr -->
+            var link_str = "link";
+            
+            $('.flickr-feed').jflickrfeed({
+            limit: {text:Flickr Widget Feed Count},
+            qstrings: {
+            id: '{text:Flickr User ID}'
+            },
+            itemTemplate: 
+            '<li>' +
+            '<a href="{{' + link_str + '}}"><img src="{{image_m}}" alt="{{title}}" /></a>' +
+            '</li>'
+            });
+        {/block:IfFlickrUserID}  
+        
+        {block:IfDribbbleWidgetAccessToken}
+        $.jribbble.setToken('{text:Dribbble Widget Access Token}');
+        $.jribbble.users('{text:Dribbble Widget Username}').shots({per_page: 36}).then(function(shots) {
+          var html = [];
+          
+          shots.forEach(function(shot) {
+            html.push('<li class="shots--shot">');
+            html.push('<a href="' + shot.html_url + '" target="_blank">');
+            html.push('<img src="' + shot.images.normal + '">');
+            html.push('</a></li>');
+          });
+          
+          $('.dribbble-feed').html(html.join(''));
+        });
+        {/block:IfDribbbleWidgetAccessToken}
+    </script>
 
 </body>
 </html>
