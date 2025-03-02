@@ -163,15 +163,6 @@
         <meta name="text:Custom Link 10 URL" content=""/>
         <meta name="text:Custom Link 10 Name" content=""/>
         
-        <!-- Social Widgets -->
-        <meta name="text:Flickr Widget Title" content="Flickr">
-        <meta name="text:Flickr User ID" content="">
-        <meta name="text:Flickr Widget Feed Count" content="4">
-        <meta name="text:Dribbble Widget Title" content="Dribbble">
-        <meta name="text:Dribbble Widget Access Token" content="">
-        <meta name="text:Dribbble Widget Username" content="">
-        <meta name="text:Dribbble Widget Feed Count" content="6">
-        
         <meta name="text:Sidebar Text Widget Title" content="">
         <meta name="text:Sidebar Text Widget" content="">
         <meta name="text:Sidebar Image Ad Link" content="#">
@@ -507,7 +498,28 @@
             color:{color:Header Text};
         }
         
+        .sidebar-social ul li svg, .banner-social ul li svg, .bluesky-icon svg {
+            height:13px;
+            width:auto;
+        }
+        
+        .x-icon {
+            height:11px;
+        }
     
+        .sidebar-social ul li svg path {
+            fill:{color:Header Text};
+        }
+        
+        .banner-social ul li svg path {
+            fill:{color:Banner Text};
+        }
+        
+        .sidebar-toggle.open #hamburger > div:last-child
+            -webkit-transform: translate3d(0, -5px, 0) rotate3d(0, 0, 1, 45deg);
+            transform: translate3d(0, -5px, 0) rotate3d(0, 0, 1, 45deg);
+        }
+        
         /* Modal */
 
         @media (min-width: 768px) {
@@ -1542,7 +1554,7 @@
                 {block:ifbannersocial}
                     <nav class="banner-social cl">
                         <ul class="social-links-icons social-links">
-                            {block:ifTwitterURL}<li><a target="_blank" href="{text:Twitter URL}"><i class="fa-brands fa-twitter"></i></a></li>{/block:ifTwitterURL}
+                            {block:ifTwitterURL}<li><a target="_blank" href="{text:Twitter URL}"><svg class="x-icon" width="13.69" height="14" viewBox="0 0 1200 1227" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z" fill="white"/></svg></a></li>{/block:ifTwitterURL}
                             {block:ifInstagramURL}<li><a target="_blank" href="{text:Instagram URL}"><i class="fa-brands fa-instagram"></i></a></li>{block:ifInstagramURL}
                             {block:ifFacebookURL}<li><a target="_blank" href="{text:Facebook URL}"><i class="fa-brands fa-facebook"></i></a></li>{/block:ifFacebookURL} 
                             {block:ifYoutubeURL}<li><a target="_blank" href="{text:Youtube URL}"><i class="fa-brands fa-youtube"></i></a></li>{/block:ifYoutubeURL}  
@@ -1733,7 +1745,7 @@
             </nav>
             <nav class="sidebar-social widget cl">
                 <ul class="social-links-icons social-links">
-                    {block:ifTwitterURL}<li><a target="_blank" href="{text:Twitter URL}"><i class="fa-brands fa-twitter"></i></a></li>{/block:ifTwitterURL}
+                    {block:ifTwitterURL}<li><a target="_blank" href="{text:Twitter URL}"><svg class="x-icon" width="13.69" height="14" viewBox="0 0 1200 1227" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z" fill="white"/></svg></a></li>{/block:ifTwitterURL}
                     {block:ifInstagramURL}<li><a target="_blank" href="{text:Instagram URL}"><i class="fa-brands fa-instagram"></i></a></li>{block:ifInstagramURL}
                     {block:ifFacebookURL}<li><a target="_blank" href="{text:Facebook URL}"><i class="fa-brands fa-facebook"></i></a></li>{/block:ifFacebookURL} 
                     {block:ifYoutubeURL}<li><a target="_blank" href="{text:Youtube URL}"><i class="fa-brands fa-youtube"></i></a></li>{/block:ifYoutubeURL}  
@@ -1785,17 +1797,6 @@
                     <p>{text:Sidebar Text Widget}</p>
                 </div>
             {/block:IfSidebarTextWidget}
-            
-            {block:IfFlickrUserID}
-                <div class="flickr widget cl"> <h3>{text:Flickr Widget Title}</h3> <ul class="flickr-feed social-widget"></ul> </div>
-            {/block:IfFlickrUserID}
-    
-            {block:IfDribbbleWidgetAccessToken}
-            <div class="dribbble widget cl"> 
-                <h3>{text:Dribbble Widget Title}</h3> 
-                <ul class="dribbble-feed social-widget"></ul> 
-            </div>
-            {/block:IfDribbbleWidgetAccessToken}
             
             
             {block:ifsidebarimageadimage}
@@ -2414,7 +2415,7 @@
                     TweenMax.to(".post", 0.4, {autoAlpha:1, ease:Power2.easeOut});
                 });
 
-                setTimeout(function(){
+             setTimeout(function(){
                     $('#stash-ants').isotope(true).isotope('layout');
                 }, 1200);
             }
@@ -2480,47 +2481,18 @@
     </div>
 
     {block:IfGoogleAnalyticsID}
-    <script>
-        var _gaq=[['_setAccount','{text:Google Analytics ID}'],['_trackPageview']];
-        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-        s.parentNode.insertBefore(g,s)}(document,'script'));
-    </script>
+        <!-- Google tag/Analytics (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id={text:Google Analytics ID}"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            
+            gtag('config', '{text:Google Analytics ID}');
+        </script>
     {/block:IfGoogleAnalyticsID}
     
-    <script>
-        {block:IfFlickrUserID}            
-            <!-- Flickr -->
-            var link_str = "link";
-            
-            $('.flickr-feed').jflickrfeed({
-            limit: {text:Flickr Widget Feed Count},
-            qstrings: {
-            id: '{text:Flickr User ID}'
-            },
-            itemTemplate: 
-            '<li>' +
-            '<a href="{{' + link_str + '}}"><img src="{{image_m}}" alt="{{title}}" /></a>' +
-            '</li>'
-            });
-        {/block:IfFlickrUserID}  
-        
-        {block:IfDribbbleWidgetAccessToken}
-        $.jribbble.setToken('{text:Dribbble Widget Access Token}');
-        $.jribbble.users('{text:Dribbble Widget Username}').shots({per_page: 36}).then(function(shots) {
-          var html = [];
-          
-          shots.forEach(function(shot) {
-            html.push('<li class="shots--shot">');
-            html.push('<a href="' + shot.html_url + '" target="_blank">');
-            html.push('<img src="' + shot.images.normal + '">');
-            html.push('</a></li>');
-          });
-          
-          $('.dribbble-feed').html(html.join(''));
-        });
-        {/block:IfDribbbleWidgetAccessToken}
-    </script>
+
 
 </body>
 </html>
